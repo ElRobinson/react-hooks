@@ -1,5 +1,3 @@
-// useState: greeting
-// http://localhost:3000/isolated/exercise/01.js
 
 import * as React from 'react'
 
