@@ -1,7 +1,24 @@
 // useEffect: persistent state
 // http://localhost:3000/isolated/exercise/02.js
 
-import * as React from 'react'
+import React, {useState, useEffect} from 'react'
+
+function useLocalStorageState(key, defaultValue = ''){
+  const [state, setState] = useState(
+    () => {
+      const valueInLocalStorage = window.localStorage.getItem(key)
+      if (valueInLocalStorage) {
+        return JSON.parse(valueInLocalStorage);
+      }
+      return defaultValue;
+    })
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(state))
+  }, [key, state])
+
+  return [state, setState];
+}
 
 function Greeting({initialName = ''}) {
   // 🐨 initialize the state to the value from localStorage
