@@ -5,25 +5,26 @@ import React, {useEffect, useState} from 'react'
 
 import {PokemonForm, PokemonInfoFallback, PokemonDataView, fetchPokemon} from '../pokemon'
 
-function PokemonInfo({pokemonName}) {
-  const [status, setStatus] = useState('idle');
-  const [pokemon, setPokemon] = useState(null);  
-  const [error, setError] = useState(null);   
+function PokemonInfo({pokemonName}) { 
+  const [state, setState] = useState({
+    status: 'idle',
+    pokemon: null,
+    error: null
+  })
+  const {status, pokemon, error} = state
   
   useEffect(() => {
     if (!pokemonName){
       return
     }
     // loading state
-    setStatus('pending')
+    setState({status:'pending'})
     fetchPokemon(pokemonName).then(
       pokemon => {
-        setPokemon(pokemon)
-        setStatus('resolved')
+        setState({pokemon, status:'resolved'})        
       },
       error => {
-        setError(error)
-        setStatus('rejected')
+        setState({error, status:'rejected'})   
       },     
     )
 
